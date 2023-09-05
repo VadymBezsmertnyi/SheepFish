@@ -1,9 +1,11 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {CatalogScreen} from '../../screens/CatalogScreen/Catalog.screen';
+
 import {PRODUCTS_PATHS} from '../navigator.conts';
 
-import {styles} from './LessonsStack.styles';
+import {styles} from './CatalogStack.styles';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +24,7 @@ export const LessonsStack = () => {
       }}>
       <Stack.Screen
         name={PRODUCTS_PATHS.main}
-        component={() => <></>}
+        component={CatalogScreen}
         initialParams={{
           indexLesson: 0,
         }}
@@ -32,7 +34,7 @@ export const LessonsStack = () => {
       />
       <Stack.Screen
         name={PRODUCTS_PATHS.product}
-        component={() => <></>}
+        children={() => <></>}
         initialParams={{
           indexLesson: 0,
         }}
@@ -42,7 +44,7 @@ export const LessonsStack = () => {
       />
       <Stack.Screen
         name={PRODUCTS_PATHS.add}
-        component={() => <></>}
+        children={() => <></>}
         options={({route}) => ({
           headerTitle: `Урок ${
             (route.params as {indexExercise: number}).indexExercise + 1

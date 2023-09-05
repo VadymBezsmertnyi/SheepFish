@@ -5,16 +5,16 @@ import {configureStore} from '@reduxjs/toolkit';
 
 import rootReducer from './src/redux/reducers';
 
+import {Navigator} from './src/navigator/navigator';
+
 function App(): JSX.Element {
   const store = configureStore({
     reducer: rootReducer,
   });
   return (
     <Provider store={store}>
-      <SafeAreaView>
-        <Text>TEST</Text>
-        <StatusBar barStyle={'dark-content'} />
-      </SafeAreaView>
+      <StatusBar barStyle={'dark-content'} />
+      <Navigator />
     </Provider>
   );
 }
