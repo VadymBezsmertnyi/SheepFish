@@ -46,14 +46,6 @@ export const CatalogScreen: FunctionComponent<CatalogScreenProps> = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {/* <View style={styles.containerScrollView}>
-          {products.map(product => {
-            return (
-              <ItemCatalog key={`product-${product.id}`} product={product} />
-            );
-          })}
-        </View> */}
-
         <FlatList
           renderItem={({item}) => (
             <ItemCatalog key={`product-${item.id}`} product={item} />
