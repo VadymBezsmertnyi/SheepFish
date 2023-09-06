@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {},
+  container: {width: 150, gap: 2},
   image: {
     width: 150,
     height: 150,

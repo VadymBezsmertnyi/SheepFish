@@ -31,7 +31,9 @@ export const CatalogScreen: FunctionComponent<CatalogScreenProps> = () => {
     <ScrollView>
       <View style={styles.container}>
         {products.map(product => {
-          return <ItemCatalog key={`product-${product.id}`} />;
+          return (
+            <ItemCatalog key={`product-${product.id}`} product={product} />
+          );
         })}
       </View>
     </ScrollView>

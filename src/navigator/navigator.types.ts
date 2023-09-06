@@ -17,6 +17,10 @@ export type RootTabParamList = {
 
 export type RootStackCatalogParamList = {
   [PRODUCTS_PATHS.main]: undefined;
-  [PRODUCTS_PATHS.product]: undefined;
+  [PRODUCTS_PATHS.product]:
+    | {
+        idProduct: string | undefined;
+      }
+    | undefined;
   [PRODUCTS_PATHS.add]: undefined;
 };
