@@ -1,15 +1,17 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {RootStackCatalogParamList} from '../navigator.types';
+
 import {CatalogScreen} from '../../screens/CatalogScreen/Catalog.screen';
 
 import {PRODUCTS_PATHS} from '../navigator.conts';
 
 import {styles} from './CatalogStack.styles';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackCatalogParamList>();
 
-export const LessonsStack = () => {
+export const CatalogStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -25,9 +27,6 @@ export const LessonsStack = () => {
       <Stack.Screen
         name={PRODUCTS_PATHS.main}
         component={CatalogScreen}
-        initialParams={{
-          indexLesson: 0,
-        }}
         options={{
           headerTitle: 'Список товарів',
         }}
@@ -35,22 +34,11 @@ export const LessonsStack = () => {
       <Stack.Screen
         name={PRODUCTS_PATHS.product}
         children={() => <></>}
-        initialParams={{
-          indexLesson: 0,
-        }}
         options={{
           headerTitle: 'Кросівки 1',
         }}
       />
-      <Stack.Screen
-        name={PRODUCTS_PATHS.add}
-        children={() => <></>}
-        options={({route}) => ({
-          headerTitle: `Урок ${
-            (route.params as {indexExercise: number}).indexExercise + 1
-          }`,
-        })}
-      />
+      <Stack.Screen name={PRODUCTS_PATHS.add} children={() => <></>} />
     </Stack.Navigator>
   );
 };
