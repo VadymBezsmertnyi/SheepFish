@@ -1,10 +1,10 @@
 import React, {FunctionComponent, useEffect} from 'react';
-import {View, ScrollView} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {View, ScrollView, Text} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {RootStackCatalogParamList} from '../../navigator/navigator.types';
-import {AppDispatch} from '../../redux/redux.types';
+import {AppDispatch, StoreType} from '../../redux/redux.types';
 
 import {fetchProducts} from '../../redux/productsReducer';
 
@@ -16,30 +16,23 @@ interface CatalogScreenProps
   extends NativeStackScreenProps<RootStackCatalogParamList, 'catalog-main'> {}
 
 export const CatalogScreen: FunctionComponent<CatalogScreenProps> = () => {
+  const {products} = useSelector((state: StoreType) => state.productsReducer);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
+  if (products === null) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
-        <ItemCatalog />
+        {products.map(product => {
+          return <ItemCatalog key={`product-${product.id}`} />;
+        })}
       </View>
     </ScrollView>
   );

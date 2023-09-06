@@ -21,46 +21,8 @@ import IconProfile from '../icons/IconProfile';
 import IconShop from '../icons/IconShop';
 
 import colors from '../styles/colors';
-import {styles} from './navigator.style';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
-const tabBarIcon = (focused: boolean, name: string) => {
-  if (name === PATHS.shops) {
-    return (
-      <IconShop
-        width={24}
-        height={24}
-        stroke={focused ? colors.white : colors.notSelectTabBar}
-      />
-    );
-  }
-  if ((name = PATHS.profile)) {
-    return (
-      <IconProfile
-        width={24}
-        height={24}
-        stroke={focused ? colors.white : colors.notSelectTabBar}
-      />
-    );
-  }
-  if (name === PATHS.favorite) {
-    return (
-      <IconHeart
-        width={24}
-        height={24}
-        stroke={focused ? colors.white : colors.notSelectTabBar}
-      />
-    );
-  }
-
-  return (
-    <IconCart
-      width={24}
-      height={24}
-      stroke={focused ? colors.white : colors.notSelectTabBar}
-    />
-  );
-};
 const tabBarLabel = (focused: boolean, title: string) => {
   const labelStyle = {
     color: focused ? colors.white : colors.notSelectTabBar,
@@ -95,7 +57,13 @@ export const Navigator = () => {
               };
             })(route),
             headerShown: false,
-            tabBarIcon: ({focused}) => tabBarIcon(focused, route.name),
+            tabBarIcon: ({focused}) => (
+              <IconCart
+                width={24}
+                height={24}
+                stroke={focused ? colors.white : colors.notSelectTabBar}
+              />
+            ),
             tabBarLabel: ({focused}) => tabBarLabel(focused, 'Каталог'),
           })}
         />
@@ -117,8 +85,13 @@ export const Navigator = () => {
                 shadowColor: 'transparent',
               };
             })(route),
-            headerShown: false,
-            tabBarIcon: ({focused}) => tabBarIcon(focused, route.name),
+            tabBarIcon: ({focused}) => (
+              <IconShop
+                width={24}
+                height={24}
+                stroke={focused ? colors.white : colors.notSelectTabBar}
+              />
+            ),
             tabBarLabel: ({focused}) => tabBarLabel(focused, 'Крамниці'),
           })}
         />
@@ -140,8 +113,13 @@ export const Navigator = () => {
                 shadowColor: 'transparent',
               };
             })(route),
-            headerShown: false,
-            tabBarIcon: ({focused}) => tabBarIcon(focused, route.name),
+            tabBarIcon: ({focused}) => (
+              <IconHeart
+                width={24}
+                height={24}
+                stroke={focused ? colors.white : colors.notSelectTabBar}
+              />
+            ),
             tabBarLabel: ({focused}) => tabBarLabel(focused, 'Улюблені'),
           })}
         />
@@ -163,8 +141,13 @@ export const Navigator = () => {
                 shadowColor: 'transparent',
               };
             })(route),
-            headerShown: false,
-            tabBarIcon: ({focused}) => tabBarIcon(focused, route.name),
+            tabBarIcon: ({focused}) => (
+              <IconProfile
+                width={24}
+                height={24}
+                stroke={focused ? colors.white : colors.notSelectTabBar}
+              />
+            ),
             tabBarLabel: ({focused}) => tabBarLabel(focused, 'Профіль'),
           })}
         />

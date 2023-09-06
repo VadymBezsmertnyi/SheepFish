@@ -4,8 +4,8 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap-reverse',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
     gap: 16,
   },
 });

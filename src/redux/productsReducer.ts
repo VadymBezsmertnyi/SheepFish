@@ -37,7 +37,7 @@ export const lessonReducer = createSlice({
       state.products = action.payload;
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {
-      state.products = null;
+      state.products = [];
       console.error('Помилка отримання даних:', action.error.message);
     });
   },
