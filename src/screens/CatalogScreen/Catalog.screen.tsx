@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useEffect} from 'react';
-import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
+import {View, ScrollView, Text, TouchableOpacity, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {
@@ -10,7 +10,7 @@ import {
 import {RootStackCatalogParamList} from '../../navigator/navigator.types';
 import {AppDispatch, StoreType} from '../../redux/redux.types';
 
-import {fetchProducts} from '../../redux/productsReducer';
+import {fetchProducts, getProductsStorage} from '../../redux/productsReducer';
 
 import {ItemCatalog} from './components/ItemCatalog/ItemCatalog';
 
@@ -28,8 +28,12 @@ export const CatalogScreen: FunctionComponent<CatalogScreenProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    if (products === null) {
+      dispatch(getProductsStorage());
+    } else if (products?.length === 0) {
+      dispatch(fetchProducts());
+    }
+  }, []);
 
   const onAddProduct = () => {
     navigation.navigate(PRODUCTS_PATHS.add);
@@ -42,13 +46,25 @@ export const CatalogScreen: FunctionComponent<CatalogScreenProps> = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={styles.containerScrollView}>
+        {/* <View style={styles.containerScrollView}>
           {products.map(product => {
             return (
               <ItemCatalog key={`product-${product.id}`} product={product} />
             );
           })}
-        </View>
+        </View> */}
+
+        <FlatList
+          renderItem={({item}) => (
+            <ItemCatalog key={`product-${item.id}`} product={item} />
+          )}
+          data={products}
+          numColumns={2}
+          contentContainerStyle={styles.columnWrapperStyle}
+          columnWrapperStyle={styles.columnWrapperStyle}
+          key={'product'}
+          scrollEnabled={false}
+        />
       </ScrollView>
       <View style={styles.containerAddButton}>
         <TouchableOpacity style={styles.addButton} onPress={onAddProduct}>

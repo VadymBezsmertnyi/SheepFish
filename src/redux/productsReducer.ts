@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {ProductsType} from './productsReducer.types';
 import {productsSchema} from './productsReducer.schemas';
+import {getDeviceStorage, setDeviceStorage} from '../help/function.helpers';
 
 export const createProduct = createAsyncThunk(
   'products/createProduct',
@@ -47,10 +48,29 @@ export const fetchProducts = createAsyncThunk(
       const data = await response.json();
       const verifyData = productsSchema.safeParse(data);
       if (verifyData.success) {
+        await setDeviceStorage('products', JSON.stringify(data));
         return data;
       }
       return [];
     } catch (error) {
+      throw error;
+    }
+  },
+);
+
+export const getProductsStorage = createAsyncThunk(
+  'products/getProductsStorage',
+  async () => {
+    try {
+      const result = JSON.parse((await getDeviceStorage('products')) || '');
+      const verifyData = productsSchema.safeParse(result);
+      if (verifyData.success) {
+        return result;
+      }
+
+      return [];
+    } catch (error) {
+      // Обробка помилок
       throw error;
     }
   },
@@ -75,11 +95,19 @@ export const lessonReducer = createSlice({
       console.error('Помилка отримання даних:', action.error.message);
     });
     builder.addCase(createProduct.fulfilled, (state, action) => {
-      state.products = state.products
+      const newProducts = state.products
         ? [...state.products, action.payload]
         : [action.payload];
+      state.products = newProducts;
     });
     builder.addCase(createProduct.rejected, (state, action) => {
+      state.products = [];
+      console.error('Помилка отримання даних:', action.error.message);
+    });
+    builder.addCase(getProductsStorage.fulfilled, (state, action) => {
+      state.products = action.payload;
+    });
+    builder.addCase(getProductsStorage.rejected, (state, action) => {
       state.products = [];
       console.error('Помилка отримання даних:', action.error.message);
     });

@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 16,
   },
+  columnWrapperStyle: {gap: 16},
   containerAddButton: {flex: 1, position: 'relative'},
   addButton: {
     width: 64,
