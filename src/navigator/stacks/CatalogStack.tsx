@@ -12,6 +12,7 @@ import {RootStackCatalogParamList} from '../navigator.types';
 
 import {CatalogScreen} from '../../screens/CatalogScreen/Catalog.screen';
 import {ProductScreen} from '../../screens/ProductScreen/Product.screen';
+import {AddScreen} from '../../screens/AddScreen/Add.screen';
 
 import {PRODUCTS_PATHS} from '../navigator.conts';
 
@@ -69,7 +70,7 @@ export const CatalogStack = () => {
       />
       <Stack.Screen
         name={PRODUCTS_PATHS.add}
-        children={() => <></>}
+        component={AddScreen}
         options={{
           headerTitle: 'Додати товар',
           headerLeft: buttonBackToMain,
