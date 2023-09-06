@@ -1,7 +1,29 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {ProductsType} from './productsReducer.types';
+import {productsSchema} from './productsReducer.schemas';
+
+export const fetchProducts = createAsyncThunk(
+  'products/fetchProducts',
+  async () => {
+    try {
+      const response = await fetch('https://fakestoreapi.com/products');
+      if (!response.ok) {
+        throw new Error('Помилка запиту до сервера');
+      }
+      const data = await response.json();
+      const verifyData = productsSchema.safeParse(data);
+      if (verifyData.success) {
+        return data;
+      }
+      return [];
+    } catch (error) {
+      throw error;
+    }
+  },
+);
 
 export type StateProductsReducer = {
-  products: Array<string> | null;
+  products: ProductsType | null;
 };
 
 export const lessonReducer = createSlice({
@@ -9,24 +31,18 @@ export const lessonReducer = createSlice({
   initialState: {
     products: null,
   } as StateProductsReducer,
-  reducers: {
-    getLessons: state => {
-      state.products = [];
-    },
-    /* addTodo: (state, action) => {
-      state.todos_list = [
-        ...state.todos_list,
-        { id: ++id, task: action.payload.task },
-      ];
-    },
-    deleteTodo: (state, action) => {
-      state.todos_list = [
-        ...state.todos_list.filter((todo) => todo.id != action.payload),
-      ];
-    }, */
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      state.products = action.payload;
+    });
+    builder.addCase(fetchProducts.rejected, (state, action) => {
+      state.products = null;
+      console.error('Помилка отримання даних:', action.error.message);
+    });
   },
 });
 
-export const {getLessons} = lessonReducer.actions;
+export const {} = lessonReducer.actions;
 
 export default lessonReducer.reducer;

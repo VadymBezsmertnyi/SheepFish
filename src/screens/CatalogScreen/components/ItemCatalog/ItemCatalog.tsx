@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 
 import defaultImage from '../../../../images/product.jpeg';
 
@@ -7,7 +7,7 @@ import {styles} from './ItemCatalog.styles';
 
 export const ItemCatalog: FunctionComponent = () => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View>
         <Image style={styles.image} source={defaultImage} />
       </View>
@@ -17,6 +17,6 @@ export const ItemCatalog: FunctionComponent = () => {
       <View>
         <Text style={styles.price}>2 000 грн</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };

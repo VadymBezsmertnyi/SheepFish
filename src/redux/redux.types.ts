@@ -1,5 +1,7 @@
-import {StateLessonReducer} from './productsReducer';
+import {StateProductsReducer} from './productsReducer';
+import {store} from './reducers';
 
 export type StoreType = {
-  lessonReducer: StateLessonReducer;
+  lessonReducer: StateProductsReducer;
 };
+export type AppDispatch = typeof store.dispatch;
